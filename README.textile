@@ -42,6 +42,8 @@ bc.. class CustomersController < ApplicationController
 
 p. Manual crumb levels and labels can be added in any action via the regular @ariane.add@ method.   
 
+h2. Use Case
+
 Start the arian-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
 
 h2. Issues
