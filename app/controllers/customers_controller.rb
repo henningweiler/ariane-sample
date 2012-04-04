@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-  prepend_before_filter { |controller| controller.crumb_levels :show => 4, :new => 4 }
+  prepend_before_filter { |controller| controller.crumb_levels :show => 4, :new => 4, :create => 4, :edit => 4, :update => 4}
   
   # GET /customers
   # GET /customers.json
