@@ -44,7 +44,8 @@ p. Manual crumb levels and labels can be added in any action via the regular @ar
 
 Start the arian-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
 
-TODO: Create an @ariane.return_to@ render method to generate a return_to html link that that can be used in addition to the break crumb trail to return to the previous task.
+TODO: Create an @ariane.return_to@ render method to generate a return_to html link that that can be used in addition to the breadcrumb trail to return to the previous task.
 
 NOTE: The current implementation depends on a root_path definition in routes.rb
+
 NOTE: The current implementation will crash on nil[] error if no crumbs have been set and ariane.render is called in the view.
