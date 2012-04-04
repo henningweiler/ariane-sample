@@ -1,4 +1,4 @@
-$:.push File.expand_path("/Users/tony/Code/ariane/lib", __FILE__)
+$:.push File.expand_path("../../../../ariane/lib", __FILE__)
 require 'ariane'
 
 Ariane.configure do |config|

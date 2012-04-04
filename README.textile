@@ -1,3 +1,50 @@
 h1. Ariane Dynamic Breadcrumb Sample App
 
-Full readme comming soon...
+ A PoC for the "Ariane":https://github.com/simonc/ariane breadcrumb gem, forked and modified to support a session and stack based dynamic breadcrumb list.
+
+h2. Features
+
+* Automatic breadcrumb generation based on controller and action name (needs i18n localization feature)
+* Manual crumb override
+* Custom crumb levels for 'break-out' tasks
+* Return Link renderer
+
+
+h2. Installation
+
+Clone both the ariane and ariane-sample repositories.
+The sample app references the "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository must be located at the same directory level as the sample e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
+
+The Rails initiializer:
+
+bc.. #~/Code/ariane-sample/config/initializers/ariane.rb 
+$:.push File.expand_path("../../../../ariane/lib", __FILE__)
+require 'ariane'
+
+Ariane.configure do |config|
+    config.use_session_stack = true
+end
+
+p. Ariane is configured to use the session stack via @config.use_session_stack = true@ (ideally using the database or memcache session stores).
+
+The @application_controller.rb@ has the following @before_filter@:
+
+bc.. class ApplicationController < ActionController::Base
+  protect_from_forgery
+  before_filter :auto_set_breadcrumb
+end
+
+p. The @CustomersContoller@ shows how a custom crumb level can be set for specific actions.
+
+bc.. class CustomersController < ApplicationController
+  prepend_before_filter { |controller| controller.crumb_levels :show => 4, :new => 4 }
+...
+
+p. Manual crumb levels and labels can be added in any action via the regular @ariane.add@ method.   
+
+Start the arian-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
+
+TODO: Create an @ariane.return_to@ render method to generate a return_to html link that that can be used in addition to the break crumb trail to return to the previous task.
+
+NOTE: The current implementation depends on a root_path definition in routes.rb
+NOTE: The current implementation will crash on nil[] error if no crumbs have been set and ariane.render is called in the view.

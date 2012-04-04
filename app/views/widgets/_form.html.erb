@@ -24,7 +24,6 @@
     <%= f.number_field :price %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit %> (<%= link_to 'Create Customer', new_customer_path %>)
   </div>
-(<%= link_to 'Create Customer', new_customer_path %>)
 <% end %>
