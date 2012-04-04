@@ -13,7 +13,7 @@ h2. Features
 h2. Installation
 
 Clone both the ariane and ariane-sample repositories.
-The sample app references forked the "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository must be located at the same directory level as the sample e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
+The sample app references the forked "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository must be located at the same directory level as the sample e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
 
 The Rails initiializer:
 
