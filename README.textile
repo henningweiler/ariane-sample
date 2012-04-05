@@ -7,18 +7,25 @@ h2. Features
 * Automatic breadcrumb generation based on controller and action name (needs i18n localization feature)
 * Manual crumb override
 * Custom crumb levels for 'break-out' tasks
-* Return Link renderer
+* Return_to link renderer
 
 
 h2. Installation
 
-Clone both the ariane and ariane-sample repositories.
+See the original usage and installation instructions for the published gem at "Ariane":https://github.com/simonc/ariane
+
+The sample application shown here uses the forked and modified Ariane library, which now includes a session based breadcrumb array that will persist across requests. Crumbs with lower crumb levels will @pop@ crumbs with >= crumb levels from the breadcrumb array.
+
+To experiment with the sample app - clone both the forked ariane and ariane-sample repositories.
+
+bc. git clone git://github.com/58bits/ariane.git
+git clone git://github.com/58bits/ariane-sample.git
 
 Run @rake db:migrate@ against ariane-sample
 
 Run @rails s@ to start the sample app.
 
-The sample app references the forked "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository must be located at the same directory level as the sample e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
+The sample app references the forked "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository and sample app can be placed anywhere, but they must be located at the same directory level e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
 
 The Rails initiializer:
 
@@ -30,7 +37,7 @@ Ariane.configure do |config|
     config.use_session_stack = true
 end
 
-p. Ariane is configured to use the session stack via @config.use_session_stack = true@ (ideally using the database or memcache session stores).
+p. Ariane is configured in the sample app to use the session stack via @config.use_session_stack = true@ (ideally using the database or memcache session stores).
 
 The @application_controller.rb@ has the following @before_filter@:
 
@@ -58,4 +65,4 @@ h2. Issues
 
 h2. TODO
 
-Create an @ariane.return_to@ render method to generate a return_to html link that that can be used in addition to the breadcrumb trail to return to the previous task.
+Create an @ariane.return_to@ render method to generate a return_to html link that that can be used as a link or button in addition to the breadcrumb trail to return to the previous task.
