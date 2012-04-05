@@ -13,6 +13,11 @@ h2. Features
 h2. Installation
 
 Clone both the ariane and ariane-sample repositories.
+
+Run @rake db:migrate@ against ariane-sample
+
+Run @rails s@ to start the sample app.
+
 The sample app references the forked "Ariane":https://github.com/simonc/ariane lib directory via an initializer. The ariane repository must be located at the same directory level as the sample e.g. @~/Code/ariane@ and @~/Code/ariane-sample@.
 
 The Rails initiializer:
@@ -44,7 +49,7 @@ p. Manual crumb levels and labels can be added in any action via the regular @ar
 
 h2. Use Case
 
-Start the arian-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
+Start the ariane-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
 
 h2. Issues
 
