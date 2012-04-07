@@ -1,5 +1,4 @@
 class WidgetsController < ApplicationController
-  prepend_before_filter { |controller| controller.crumb_levels :index => 2, :show => 3, :new => 3 }
   
   # GET /widgets
   # GET /widgets.json

@@ -19,9 +19,10 @@ The sample application shown here uses the forked and modified Ariane library, w
 To experiment with the sample app - clone both the forked ariane and ariane-sample repositories.
 
 bc. git clone git://github.com/58bits/ariane.git
+git checkout session #checkout the topic branch for this feature
 git clone git://github.com/58bits/ariane-sample.git
 
-Run @rake db:migrate@ against ariane-sample
+Run @bundle install@ and @rake db:migrate@ against ariane-sample
 
 Run @rails s@ to start the sample app.
 
@@ -34,10 +35,15 @@ $:.push File.expand_path("../../../../ariane/lib", __FILE__)
 require 'ariane'
 
 Ariane.configure do |config|
-    config.use_session_stack = true
+    config.dynamic_breadcrumb = true
 end
 
-p. Ariane is configured in the sample app to use the session stack via @config.use_session_stack = true@ (ideally using the database or memcache session stores).
+p. Ariane is configured in the sample app to use the dynamic session based breadcrumb via @config.dynamic_breadcrumb = true@ (ideally using the database or memcache session stores).
+
+
+h2. Use Cases
+
+h3. Scenario 1: auto_set_breadcrumb with levels override in a controller
 
 The @application_controller.rb@ has the following @before_filter@:
 
@@ -46,17 +52,54 @@ bc.. class ApplicationController < ActionController::Base
   before_filter :auto_set_breadcrumb
 end
 
-p. The @CustomersContoller@ shows how a custom crumb level can be set for specific actions.
+p. The @CustomersContoller@ has custom crumb levels assigned via the @prepend_before_filter@.
 
 bc.. class CustomersController < ApplicationController
-  prepend_before_filter { |controller| controller.crumb_levels :show => 4, :new => 4, :create => 4, :edit => 4, :update => 4}
+  prepend_before_filter { |controller| controller.set_crumb_levels :index => 4, :show => 5, :new => 5, :create => 5, :edit => 5, :update => 5}
 ...
 
-p. Manual crumb levels and labels can be added in any action via the regular @ariane.add@ method.   
+p. Start the ariane-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
 
-h2. Use Case
+p. NOTE: Manual crumb levels and labels can be added inside any action via the regular @ariane.add@ method.   
 
-Start the ariane-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
+h3. Scenario 2: auto_set_breadcrumb with crumbs override in a controller 
+
+The @application_controller.rb@ has the @auto_set_breadcrumb@ method moved to a @prepend_before_filter@:
+
+bc.. class ApplicationController < ActionController::Base
+  protect_from_forgery
+  prepend_before_filter :auto_set_breadcrumb
+end
+
+p. The @AddressesContoller@ has custom breadcrumbs assigned via a @before_filter@ and a private helper method.
+
+bc.. class AddressesController < ApplicationController
+  before_filter :set_address_crumbs
+
+  ...
+
+  private
+
+  def set_address_crumbs
+    case self.action_name
+    when 'index'
+      label = "Funky Addresses"; level = 2
+    when 'show'
+      label = "Funky Address"; level = 3
+    when 'new', 'create'
+      label = "Create that Funky Address!"; level = 3
+    when 'edit', 'update'
+      label = "Change that Funky Address!"; level = 3
+    when 'delete'
+      label = "Address be Gone!"; level = 3
+    end
+
+   ariane.add label, request.fullpath, level
+  end
+
+h3. Scenario 3: breadcrumbs are set on a per controller basis
+
+p. In this case - @auto_set_breadcrumb@ is not used in either a @prepend_before_filter@ or @before_filter@ in the application contoller, and the dynamic breadcrumb trail is set using a helper method on a per controller basis as shown in the AddressController above.
 
 h2. Issues
 
