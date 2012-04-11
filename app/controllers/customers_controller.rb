@@ -1,5 +1,7 @@
 class CustomersController < ApplicationController
-  prepend_before_filter { |controller| controller.set_crumb_levels :index => 4, :show => 5, :new => 5, :create => 5, :edit => 5, :update => 5}
+  #prepend_before_filter { |controller| controller.set_crumb_levels :index => 4, :show => 5, :new => 5, :create => 5, :edit => 5, :update => 5}
+  # Since all actions will typically be at the index level + 1 - we can set the :index explicitly, and a default for all the rest.
+  prepend_before_filter { |controller| controller.set_crumb_levels :index => 4, :default => 5}
   
   # GET /customers
   # GET /customers.json
