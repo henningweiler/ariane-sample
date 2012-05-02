@@ -58,7 +58,7 @@ bc.. class CustomersController < ApplicationController
   prepend_before_filter { |controller| controller.set_crumb_levels :index => 4, :default => 5}
 ...
 
-p. We could have assigned a custom crumb level to each action, but in most cases on two levels will be needed- one for the index action, and another for the remaining actions. We can use the @:default@ symbol to set all of the actions to a given level, and then set the index action to its own level (4 in this case). 
+p. We could have assigned a custom crumb level to each action, but in most cases only two levels will be needed - one for the index action, and another for the remaining actions. We can use the @:default@ symbol to set all of the actions to a given level, and then set the index action to its own level (4 in this case). 
 
 p. Start the ariane-sample app and create a new Widget - then break-out of the New Widget task and create a New Customer. Once the customer has been created, return to the New Widget task.
 
