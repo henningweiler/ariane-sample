@@ -1,6 +1,6 @@
 h1. Ariane Dynamic Breadcrumb Sample App
 
- A PoC for the "Ariane":https://github.com/simonc/ariane breadcrumb gem, forked and modified to support a session and stack based dynamic breadcrumb list.
+ A PoC for the "Ariane":https://github.com/simonc/ariane breadcrumb gem, forked and modified to support a session and stack based dynamic breadcrumb list (NOTE: the dynamic session based breadcrumb feature has now been merged into the master ariane branch).
 
 h2. Features
 
